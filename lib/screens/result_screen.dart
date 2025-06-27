@@ -159,7 +159,7 @@ class _ResultScreenState extends State<ResultScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _row('Part:', txn.part),
+//                _row('Part:', txn.part),
                 _row('From:', txn.from.isEmpty ? '-' : txn.from),
                 _row('To:', txn.to.isEmpty ? '-' : txn.to),
                 _row('User:', txn.user),
@@ -197,9 +197,10 @@ class _ResultScreenState extends State<ResultScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF001F3F), // Dark navy color
         title: Text(
-          _transactions.isNotEmpty ? _transactions.first.tranType : 'Transaction',
+          _transactions.isNotEmpty ? 'Part: ${_transactions.first.part}' : 'Transaction',
           style: const TextStyle(color: Colors.white),
         ),
+
         leading: const BackButton(color: Colors.white), // white back arrow
       ),
       body: FutureBuilder<List<Transaction>>(
