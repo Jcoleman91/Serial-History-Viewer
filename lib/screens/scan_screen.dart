@@ -19,12 +19,43 @@ class _ScanScreenState extends State<ScanScreen> {
   Future<void> scanBarcode() async {
     try {
       var result = await BarcodeScanner.scan();
-      if (result.rawContent.isNotEmpty) {
-        _navigateToResults(result.rawContent.trim());
+      final rawContent = result.rawContent;
+
+      if (rawContent.isNotEmpty) {
+        final cleaned = rawContent.trim();
+
+        // Optional: print for debugging
+        print('Raw scan result: "$rawContent"');
+        print('Cleaned scan result: "$cleaned"');
+
+        // Basic sanity check
+        if (cleaned.isEmpty || cleaned.toLowerCase() == 'null') {
+          _showErrorDialog('Invalid barcode. Please try again.');
+          return;
+        }
+
+        _navigateToResults(cleaned);
       }
     } catch (e) {
-      // TODO: Handle error or cancellation if needed
+      print('Scan failed: $e');
+      _showErrorDialog('Scan failed. Please try again.');
     }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
   }
 
   void _navigateToResults(String serialNumber) {
