@@ -141,7 +141,7 @@ class _ResultScreenState extends State<ResultScreen> {
         final month = parts[0].padLeft(2, '0');
         final day = parts[1].padLeft(2, '0');
         final year = '20${parts[2]}';
-        return '$month-$day-$year       $time';
+        return '$month-$day-$year    $time';
       }
     } catch (_) {}
     return '$date $time';
@@ -151,19 +151,17 @@ class _ResultScreenState extends State<ResultScreen> {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: ExpansionTile(
-        title: Text(txn.part, style: const TextStyle(fontWeight: FontWeight
-            .bold)),
-        subtitle: Text(formatDateTime(txn.date, txn.time)),
+        title: Text(txn.tranType, style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text('${formatDateTime(txn.date, txn.time)}  |  End Qty: ${txn.endQty}'),
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 16, bottom: 12, right: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _row('Transaction Type:', txn.tranType),
+                _row('Part:', txn.part),
                 _row('From:', txn.from.isEmpty ? '-' : txn.from),
                 _row('To:', txn.to.isEmpty ? '-' : txn.to),
-                _row('End Quantity:', txn.endQty),
                 _row('User:', txn.user),
               ],
             ),
@@ -199,7 +197,7 @@ class _ResultScreenState extends State<ResultScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF001F3F), // Dark navy color
         title: Text(
-          'Serial: ${widget.serialNumber}',
+          _transactions.isNotEmpty ? _transactions.first.tranType : 'Transaction',
           style: const TextStyle(color: Colors.white),
         ),
         leading: const BackButton(color: Colors.white), // white back arrow
@@ -256,7 +254,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         // Search field
                         TextField(
                           decoration: const InputDecoration(
-                            labelText: 'Search by Part or User',
+                            labelText: 'Search by User',
                             border: OutlineInputBorder(),
                             prefixIcon: Icon(Icons.search),
                           ),

@@ -30,9 +30,24 @@
     <key>UIMainStoryboardFile</key>
     <string>Main</string>
 
-    <!-- ADD THIS: Camera Usage Description -->
+    <!-- Camera Usage Description -->
     <key>NSCameraUsageDescription</key>
     <string>This app needs camera access to scan barcodes.</string>
+
+    <!-- App Transport Security Exceptions -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <key>172.27.80.209</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+            </dict>
+        </dict>
+    </dict>
 
     <key>UISupportedInterfaceOrientations</key>
     <array>
